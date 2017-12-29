@@ -34,13 +34,13 @@ int	print_itoa_base(t_print *s, long long number, int base, int mode)
 	n = (s->mfw) ? (LL)s->mfw : (LL)s->precision;
 	if (s->hash && s->pad == '0' && (number != 0) && (n -= 2) && (s->cnt += 2))
 		(mode == CM) ? ft_putstr("0X") : ft_putstr("0x");
-	if (!(s->nmfw) && s->mfw)
-		while (n-- > (LL)i && (s->cnt += 1))
-			ft_putchar(s->pad);
-	if (number < 0 && (s->cnt += 1))
+	if (number < 0 && (s->cnt += 1) && (cur += 1))
 		ft_putchar('-');
-	else if (s->plus && (s->cnt += 1))
+	else if (s->plus && (s->cnt += 1) && (cur += 1))
 		ft_putchar(s->psign);
+	if (!(s->nmfw) && s->mfw)
+		while (n-- > (LL)cur && (s->cnt += 1))
+			ft_putchar(s->pad);
 	if (number == 0 && (s->cnt += 1))
 	{
 		ft_putnbr(0);

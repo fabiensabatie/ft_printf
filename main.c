@@ -92,6 +92,6 @@ int main(void)
 	ft_printf("Nombre %%X: %.78X\n", 25);
 	printf("Nombre %%X: %5X\n", 25);
 	ft_printf("Nombre %%X: %5X\n", 25);*/
-	printf("@moulitest: %5.x %5.0x\n", 0, 0);
-	ft_printf("@moulitest: %5.x %5.0x\n", 0, 0);
+	printf("%-5d|\n", -42);
+	ft_printf("%-5d|\n", -42);
 }

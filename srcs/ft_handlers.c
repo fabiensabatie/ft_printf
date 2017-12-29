@@ -118,37 +118,38 @@ intmax_t	get_arg(t_print *s)
 		nbr = (intmax_t)nbr;
 	else if (*s->format == 'z' && (s->format += 1))
 		nbr = (size_t)nbr;
-	else
-		nbr = (unsigned int)nbr;
 	return (nbr);
 }
 
 void	process_flag(t_print *s)
 {
 	s->format += 1;
+	intmax_t arg;
+
+	arg = get_arg(s);
 	handle_spec(s);
 	if (*s->format == 'c')
-		print_str(s, va_arg(s->ap, char*), CHAR);
+		print_str(s, (char*)arg, CHAR);
 	else if (*s->format == 'o')
-		print_itoa_base(s, (LL)ft_abs(va_arg(s->ap, LL)), 8, CM);
+		print_itoa_base(s, (LL)ft_abs(arg), 8, CM);
 	else if (*s->format == 'x')
-		print_itoa_base(s, (LL)ft_abs(va_arg(s->ap, LL)), 16, LM);
+		print_itoa_base(s, (LL)ft_abs(arg), 16, LM);
 	else if (*s->format == 'X')
-		print_itoa_base(s, (LL)ft_abs(va_arg(s->ap, LL)), 16, CM);
+		print_itoa_base(s, (LL)ft_abs(arg), 16, CM);
 	else if (*s->format == 'd')
-		print_itoa_base(s, (LL)va_arg(s->ap, int), 10, CM);
+		print_itoa_base(s, (LL)arg, 10, CM);
 	else if (*s->format == 'i')
-		print_itoa_base(s, (LL)va_arg(s->ap, int), 10, CM);
+		print_itoa_base(s, (LL)arg, 10, CM);
 	else if (*s->format == 'D')
-		print_itoa_base(s, (LL)ft_abs(va_arg(s->ap, LL)), 10, CM);
+		print_itoa_base(s, (LL)arg, 10, CM);
 	else if (*s->format == 'p')
-		ft_printf("0x7fff%x", (LL)ft_abs(va_arg(s->ap, LL)));
+		ft_printf("0x7fff%x", (LL)ft_abs(arg));
 	else if (*s->format == 's')
-		print_str(s, va_arg(s->ap, char*), STR);
+		print_str(s, (char*)arg, STR);
 	else if (*s->format == 'C')
-		print_str(s, (char*)va_arg(s->ap, wchar_t*), UNI_CHAR);
+		print_str(s, (char*)arg, UNI_CHAR);
 	else if (*s->format == 'S')
-		print_str(s, (char*)va_arg(s->ap, wchar_t*), UNI_STR);
+		print_str(s, (char*)arg, UNI_STR);
 	else if (*s->format == '%')
 		print_str(s, (char*)'%', CHAR);
 	s->format += 1;
