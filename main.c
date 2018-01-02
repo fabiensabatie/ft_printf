@@ -10,18 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "./includes/ft_printf.h"
 #include <stdio.h>
 #include <locale.h>
 
 int main(void)
-{/*
+{
 	setlocale(LC_ALL, "");
-	char value = 25;
-	char *tr = &value;
+//	char value = 25;
+	//char *tr = &value;
 
-	printf("Nombre %%i: %i\n", 25);
-	ft_printf("Nombre %%i: %i\n", 25);
+	ft_printf("%hd", 25);
+	ft_printf("%hhd", 25);
+	ft_printf("%ld", 25);
+	ft_printf("%lld", 25);
+	ft_printf("%jd", 25);
+	ft_printf("%zd", 25);
+	ft_printf("%hi", 25);
+	ft_printf("%hhi", 25);
+	ft_printf("%li", 25);
+	ft_printf("%lli", 25);
+	ft_printf("%ji", 25);
+	ft_printf("%zi", 25);
+	ft_printf("%hD", 25);
+	ft_printf("%hhD", 25);
+	ft_printf("%lD", 25);
+	ft_printf("%llD", 25);
+	ft_printf("%jD", 25);
+	ft_printf("%zD", 25);
+	ft_printf("%ho", 25);
+	ft_printf("%hho", 25);
+	ft_printf("%lo", 25);
+	ft_printf("%llo", 25);
+	ft_printf("%jo", 25);
+	ft_printf("%zo", 25);
+	/*
 	printf("Nombre %%d: %d\n", 25);
 	ft_printf("Nombre %%d: %d\n", 25);
 	printf("Nombre %%D: %D\n", 25);
@@ -92,6 +115,4 @@ int main(void)
 	ft_printf("Nombre %%X: %.78X\n", 25);
 	printf("Nombre %%X: %5X\n", 25);
 	ft_printf("Nombre %%X: %5X\n", 25);*/
-	printf("%-5d|\n", -42);
-	ft_printf("%-5d|\n", -42);
 }

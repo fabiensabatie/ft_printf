@@ -26,11 +26,10 @@ WHITE = \033[0;97m
 
 NAME = libftprintf.a
 SRC_PATH = libft
+OBJ_PATH = obj
+INC_PATH = imcludes
 
 PRINTF_SRC =	ft_printf.c \
-				ft_handlers.c \
-				ft_strprint.c \
-				ft_nbrprint.c
 
 SRC_NAME =	ft_strjoin_char.c \
 			ft_strjoinfree.c \
@@ -92,6 +91,7 @@ SRC_NAME =	ft_strjoin_char.c \
 			ft_strcpy.c \
 			ft_strstr.c \
 			ft_strcat.c \
+			ft_chrstr.c \
 			ft_strlen.c \
 			ft_memset.c \
 			ft_memcpy.c \
@@ -102,20 +102,26 @@ SRC_NAME =	ft_strjoin_char.c \
 			ft_abs.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
-PRINTF_OBJ = $(PRINTF_SRC:.c=.o)
+OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
+PRINTF_OBJ = $(addprefix $(OBJ_PATH)/,$(PRINTF_SRC:.c=.o))
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
+_SRC = $(addprefix ../,$(SRC))
 PRSRC = $(addprefix srcs/,$(PRINTF_SRC))
+_PRSRC = $(addprefix ../,$(PRSRC))
+
 CPPFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME):
-	@gcc $(CPPFLAGS) -c $(SRC) $(PRSRC)
-	@ar rc $(NAME) $(OBJ_NAME) $(PRINTF_OBJ)
+	@echo "${GREEN}Compiling libft." | tr -d '\n'
+	@mkdir obj && cd obj && gcc $(CPPFLAGS) -I$(INC_PATH) -c $(_SRC) $(_PRSRC)
+	@ar rc $(NAME) $(OBJ) $(PRINTF_OBJ)
 	@ranlib $(NAME)
+	@echo " ${GREEN}[OK]"
 
 clean:
-	@rm -rf $(OBJ_NAME) $(PRINTF_OBJ)
+	@rm -rf $(OBJ_PATH)
 
 fclean: clean
 	@rm -rf $(NAME)
@@ -123,5 +129,7 @@ fclean: clean
 re: fclean all
 
 test: fclean all clean
+	@echo "${GREEN}Compiling binary." | tr -d '\n'
 	@gcc $(CPPFLAGS) -o printf libftprintf.a main.c
 	@make fclean
+	@echo " ${GREEN}[OK]"

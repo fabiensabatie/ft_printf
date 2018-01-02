@@ -77,6 +77,7 @@ char				*ft_strrchr(char *str, int c);
 char				*ft_strcat(char *s1, char *s2);
 char				*ft_strcpy(char *dst, char *src);
 char				*ft_strnsub(char const *s, int n);
+char				ft_chrstr(char *hay, char *needle);
 char				*ft_strcsub(char const *s, char c);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_strstr(char *haystack, char *needle);
