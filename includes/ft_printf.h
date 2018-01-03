@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:29:41 by fsabatie          #+#    #+#             */
-/*   Updated: 2017/12/28 14:31:54 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 01:09:29 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 # include "../libft/libft.h"
 
 typedef enum	e_mod
-{ 	H = 0,
-	HH = 1,
-	L = 2,
-	LL = 3,
-	J = 4,
-	Z = 5
+{
+	H,
+	HH,
+	L,
+	LL,
+	J,
+	Z,
+	X
 }				t_mod;
 
 typedef struct		s_print

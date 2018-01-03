@@ -5,19 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/21 16:34:09 by fsabatie          #+#    #+#             */
-/*   Updated: 2017/12/21 17:30:54 by fsabatie         ###   ########.fr       */
+/*   Created: 2017/12/10 16:34:09 by fsabatie          #+#    #+#             */
+/*   Updated: 2018/01/03 01:30:37 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
-#include <wchar.h>
 
 void	ft_putwchar(wchar_t c)
 {
-	int		unisize;
-	char	uni[4];
+	size_t	unisize;
+	int		uni[4];
 
 	unisize = 0;
 	if (c < 0x7F)

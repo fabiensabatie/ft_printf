@@ -6,7 +6,7 @@
 #    By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 17:18:12 by fsabatie          #+#    #+#              #
-#    Updated: 2017/12/23 15:43:59 by fsabatie         ###   ########.fr        #
+#    Updated: 2018/01/03 10:36:51 by fsabatie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -133,3 +133,6 @@ test: fclean all clean
 	@gcc $(CPPFLAGS) -o printf libftprintf.a main.c
 	@make fclean
 	@echo " ${GREEN}[OK]"
+
+tclean : fclean
+	@rm -rf printf

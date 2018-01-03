@@ -6,13 +6,12 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/21 16:34:09 by fsabatie          #+#    #+#             */
-/*   Updated: 2017/12/21 17:34:26 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 01:31:08 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
-#include <wchar.h>
 
 void	ft_putwstr(wchar_t *wstr)
 {

@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:34:09 by fsabatie          #+#    #+#             */
-/*   Updated: 2017/12/23 18:50:11 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 01:31:31 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,30 +70,36 @@ nificant digits for g and G conversions, or the maximum number of char-
 acters to be printed from a string for s conversions.
 */
 
-intmax_t	get_arg(t_print *s)
+void	get_modifiers(t_print *s)
 {
-	intmax_t arg;
-
-	arg = va_arg(s->ap, intmax_t);
-	if (*s->format++ == 'h')
-		(*s->format++ == 'h') ? (s->mod = HH) : (s->mod = H);
-	else if (*s->format++ == 'l')
-		(*s->format++ == 'l') ? (s->mod = LL) : (s->mod = L);
-	else if (*s->format == 'j' && (s->format += 1))
+	if (*s->format == 'h')
+		(*(s->format + 1) == 'h' && (s->format += 1)) ?
+		(s->mod = HH) : (s->mod = H);
+	else if (*s->format == 'l')
+		(*(s->format + 1) == 'l' && (s->format += 1)) ?
+		(s->mod = LL) : (s->mod = L);
+	else if (*s->format == 'j')
 		s->mod = J;
-	else if (*s->format == 'z' && (s->format += 1))
+	else if (*s->format == 'z')
 		s->mod = Z;
-	return (arg);
+	else
+		s->mod = X;
+	s->format++;
 }
+// TODO: Rediriger les nombres vers les fonctions qui vont bien,
+// ainsi que les strings.
+
 
 void		process_flag(t_print *s)
 {
-	s->format++;
-	s->flag = ft_chrstr("sSpdDioOuUxXcC", s->format);
-	if (ft_strchr("dDiouUxX", s->flag))
-		get_arg(s);
-	printf("Identified flag: %c with modifier: %i\n", s->flag, (int)s->mod);
-
+	s->flag = ft_chrstr("sSpdDioOuUxXcC%", s->format);
+	get_modifiers(s);
+	if (ft_strchr("dDioOuUxX", s->flag))
+		ft_putendl("Coming soon");
+	else if (ft_strchr("sSpcC", s->flag))
+		ft_putendl("Coming soon");
+	else if (s->flag == '%')
+		ft_putchar('%');
 }
 
 int			ft_printf(const char *format, ...)
@@ -105,10 +111,10 @@ int			ft_printf(const char *format, ...)
 	va_start(s.ap, format);
 	while (*s.format)
 	{
-		if (*s.format == '%')
+		if (*s.format == '%' && (s.format += 1))
 			process_flag(&s);
 		else
-			s.format++;
+			ft_putchar(*s.format++);
 	}
 	va_end(s.ap);
 	return (1);
