@@ -30,6 +30,9 @@ OBJ_PATH = obj
 INC_PATH = imcludes
 
 PRINTF_SRC =	ft_printf.c \
+				handlers.c \
+				nb_printers.c \
+				str_printers.c
 
 SRC_NAME =	ft_strjoin_char.c \
 			ft_strjoinfree.c \
@@ -114,7 +117,7 @@ CPPFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	@echo "${GREEN}Compiling libft." | tr -d '\n'
+	@echo "${GREEN}Compiling libftprintf." | tr -d '\n'
 	@mkdir obj && cd obj && gcc $(CPPFLAGS) -I$(INC_PATH) -c $(_SRC) $(_PRSRC)
 	@ar rc $(NAME) $(OBJ) $(PRINTF_OBJ)
 	@ranlib $(NAME)

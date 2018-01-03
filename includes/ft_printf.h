@@ -34,7 +34,9 @@ typedef struct		s_print
 	size_t			cnt;
 }					t_print;
 
-int					ft_printf(const char * format, ...);
-void	process_flag(t_print *s);
+int					ft_printf(const char *format, ...);
+void				process_flag(t_print *s);
+void				handle_nb(t_print *s);
+void				handle_str(t_print *s);
 
 #endif

@@ -16,7 +16,7 @@
 void	ft_putwchar(wchar_t c)
 {
 	size_t	unisize;
-	int		uni[4];
+	char	uni[4];
 
 	unisize = 0;
 	if (c < 0x7F)
@@ -34,7 +34,7 @@ void	ft_putwchar(wchar_t c)
 	}
 	else if (c <= 0x1FFFFFF && (unisize = 4))
 	{
-		uni[0] = (c >> 18) | 0xf0;;
+		uni[0] = (c >> 18) | 0xf0;
 		uni[1] = ((c >> 12) & 0x3f) | 0x80;
 		uni[2] = ((c >> 6) & 0x3f) | 0x80;
 		uni[3] = (c & 0x3f) | 0x80;

@@ -16,5 +16,17 @@
 
 int main(void)
 {
-	ft_printf("Printing %d", 25);
+	setlocale(LC_ALL, "");
+
+	printf("%s\n", "this is a string");
+	ft_printf("%s\n", "this is a string");
+	printf("%c\n", 'a');
+	ft_printf("%c\n", 'a');
+	printf("%S\n", L"ሴሴሴሴሴሴ");
+	ft_printf("%S\n", L"ሴሴሴሴሴሴ");
+	printf("%C\n", L'ሴ');
+	ft_printf("%C\n", L'ሴ');
+	printf("%hd\n", (short)32767);
+	ft_printf("%hd\n", 32767);
+
 }
