@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/07 16:49:41 by fsabatie          #+#    #+#             */
-/*   Updated: 2017/12/21 17:59:37 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 20:31:34 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char				*ft_strstr(char *haystack, char *needle);
 char				*ft_strjoin_char(char const *s1, char c);
 char				*ft_strncat(char *s1, char *s2, size_t n);
 char				*ft_strmap(char const *s, char (*f)(char));
+char				ft_chrcstr(char *hay, char *needle, char c);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strncpy(char *dst, char *src, size_t n);
 char				*ft_strjoinfree(char const *s1, char const *s2);

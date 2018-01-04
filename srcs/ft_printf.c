@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:34:09 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 01:31:31 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 13:20:02 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int			ft_printf(const char *format, ...)
 	{
 		if (*s.format == '%' && (s.format += 1))
 			process_flag(&s);
-		else
+		else if ((s.cnt += 1))
 			ft_putchar(*s.format++);
 	}
 	va_end(s.ap);
-	return (1);
+	return (s.cnt);
 }

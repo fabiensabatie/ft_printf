@@ -3,24 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   nb_printers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsabatie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:17 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 11:13:19 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 21:22:34 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
 #include <inttypes.h>
+#include <stdlib.h>
 
-static void	uint_print(intmax_t nbr)
+static	int	get_base(t_print *s)
 {
-	ft_putnbr(nbr);
+	if (s->flag == 'o' || s->flag == 'O')
+		return (8);
+	else if (s->flag == 'x' || s->flag == 'X')
+		return (16);
+	else
+		return (10);
 }
 
-static void	lint_print(uintmax_t nbr)
+static void	nb_print(t_print *s, intmax_t nbr, int mode)
 {
-	ft_putnbr(nbr);
+	char	*digits;
+	int		res[264];
+	int		base;
+	int		i;
+
+	nbr = (mode == UINT) ? nbr : (uintmax_t)nbr;
+	i = 0;
+	base = get_base(s);
+	digits = (s->flag == 'x') ?
+	ft_strdup("0123456789abcdef") : ft_strdup("0123456789ABCDEF");
+	if (nbr == 0 && (s->cnt += 1))
+	{
+		ft_putchar('0');
+		return;
+	}
+	while (nbr)
+	{
+		res[i++] = ft_abs(nbr % base);
+		nbr /= base;
+	}
+	while (i-- && (s->cnt += 1))
+		ft_putchar(digits[res[i]]);
+	free(digits);
 }
 
 void		handle_nb(t_print *s)
@@ -30,24 +58,23 @@ void		handle_nb(t_print *s)
 	arg = va_arg(s->ap, intmax_t);
 	if (s->mod == H)
 		(s->flag == 'd' || s->flag == 'D' || s->flag == 'i') ?
-		lint_print((short)arg) : uint_print((unsigned short)arg);
+		nb_print(s, (short int)arg, INT) : nb_print(s, (unsigned short)arg, UINT);
 	if (s->mod == HH)
 		(s->flag == 'd' || s->flag == 'D' || s->flag == 'i') ?
-		lint_print((signed char)arg) : uint_print((unsigned char)arg);
+		nb_print(s, (signed char)arg, INT) : nb_print(s, (unsigned char)arg, UINT);
 	if (s->mod == L)
 		(s->flag == 'd' || s->flag == 'D' || s->flag == 'i') ?
-		lint_print((long)arg) : uint_print((unsigned long)arg);
+		nb_print(s, (long)arg, INT) : nb_print(s, (unsigned long)arg, UINT);
 	if (s->mod == LL)
 		(s->flag == 'd' || s->flag == 'D' || s->flag == 'i') ?
-		lint_print((long long)arg) : uint_print((unsigned long long)arg);
+		nb_print(s, (long long)arg, INT) : nb_print(s, (unsigned long long)arg, UINT);
 	if (s->mod == J)
 		(s->flag == 'd' || s->flag == 'D' || s->flag == 'i') ?
-		lint_print(arg) : uint_print((uintmax_t)arg);
+		nb_print(s, arg, INT) : nb_print(s, (uintmax_t)arg, UINT);
 	if (s->mod == Z)
 		(s->flag == 'd' || s->flag == 'D' || s->flag == 'i') ?
-		lint_print((size_t)arg) : uint_print((size_t)arg);
+		nb_print(s, arg, INT) : nb_print(s, (size_t)arg, UINT);
 	if (s->mod == X)
 		(s->flag == 'd' || s->flag == 'D' || s->flag == 'i') ?
-		lint_print((int)arg) : uint_print(arg);
-	s->format++;
+		nb_print(s, (int)arg, INT) : nb_print(s, (unsigned int)arg, UINT);
 }

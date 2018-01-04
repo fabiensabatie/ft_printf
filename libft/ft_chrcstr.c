@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_chrcstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/10 16:34:09 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 20:49:42 by fsabatie         ###   ########.fr       */
+/*   Created: 2018/01/02 23:33:07 by fsabatie          #+#    #+#             */
+/*   Updated: 2018/01/03 20:31:14 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/ft_printf.h"
-#include <stdio.h>
-#include <locale.h>
+#include "libft.h"
 
-int main(void)
+char	ft_chrcstr(char *hay, char *needle, char c)
 {
-	setlocale(LC_ALL, "");
+	char *s_hay;
 
-	ft_printf("%x", -42);
+	s_hay = hay;
+	while (*needle)
+	{
+		if (*needle == c)
+			return (0);
+		hay = s_hay;
+		while (*hay)
+		{
+			if (*hay == *needle)
+				return (*needle);
+			hay++;
+		}
+		needle++;
+	}
+	return (0);
 }

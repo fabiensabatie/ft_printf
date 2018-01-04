@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsabatie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:59 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 11:14:00 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 20:46:10 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,17 @@ acters to be printed from a string for s conversions.
 
 void	get_modifiers(t_print *s)
 {
-	if (*s->format == 'h')
-		(*(s->format + 1) == 'h' && (s->format += 1)) ?
+	s->mod = X;
+	if (*s->format == 'h' && (s->format += 1))
+		(*s->format == 'h' && (s->format += 1)) ?
 		(s->mod = HH) : (s->mod = H);
-	else if (*s->format == 'l')
-		(*(s->format + 1) == 'l' && (s->format += 1)) ?
+	else if (*s->format == 'l' && (s->format += 1))
+		(*s->format == 'l' && (s->format += 1)) ?
 		(s->mod = LL) : (s->mod = L);
-	else if (*s->format == 'j')
+	else if (*s->format == 'j' && (s->format += 1))
 		s->mod = J;
-	else if (*s->format == 'z')
+	else if (*s->format == 'z' && (s->format += 1))
 		s->mod = Z;
-	else
-		s->mod = X;
-	s->format++;
 }
 
 // TODO: Rediriger les nombres vers les fonctions qui vont bien,
@@ -95,6 +93,7 @@ void		process_flag(t_print *s)
 		handle_nb(s);
 	else if (ft_strchr("sScC", s->flag))
 		handle_str(s);
-	else if (s->flag == '%')
+	else if (s->flag == '%' && (s->cnt += 1))
 		ft_putchar('%');
+	s->format++;
 }

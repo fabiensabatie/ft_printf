@@ -6,13 +6,15 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:29:41 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 01:09:29 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/03 20:41:18 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "../libft/libft.h"
+# define UINT (0)
+# define INT (1)
 
 typedef enum	e_mod
 {

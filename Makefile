@@ -6,7 +6,7 @@
 #    By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 17:18:12 by fsabatie          #+#    #+#              #
-#    Updated: 2018/01/03 10:36:51 by fsabatie         ###   ########.fr        #
+#    Updated: 2018/01/03 20:30:35 by fsabatie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ SRC_NAME =	ft_strjoin_char.c \
 			ft_strnsub.c \
 			ft_strcsub.c \
 			ft_putwstr.c \
+			ft_chrcstr.c \
 			ft_lstmap.c \
 			ft_strsub.c \
 			ft_lstnew.c \
