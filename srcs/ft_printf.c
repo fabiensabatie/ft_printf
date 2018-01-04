@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:34:09 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 13:20:02 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/04 23:52:35 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int			ft_printf(const char *format, ...)
 	}
 	va_end(s.ap);
 	free(f_start);
+	if (s.hash && ft_strlen(s.hash))
+		free(s.hash);
 	return (s.cnt);
 }
