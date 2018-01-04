@@ -13,10 +13,11 @@
 #include "./includes/ft_printf.h"
 #include <stdio.h>
 #include <locale.h>
+#include <inttypes.h>
 
 int main(void)
 {
 	setlocale(LC_ALL, "");
-
-	ft_printf("%x", -42);
+	printf("@moulitest: %5.x %5.0x|\n", 0, 0);
+	ft_printf("@moulitest: %5.x %5.0x|\n", 0, 0);
 }
