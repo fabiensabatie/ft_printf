@@ -11,10 +11,10 @@
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
-# include <stdarg.h>
-# include <stdlib.h>
+#include <stdarg.h>
+#include <stdlib.h>
 
-static int init_tprint(t_print *s)
+static int	init_tprint(t_print *s)
 {
 	s->flag = 0;
 	s->mod = 0;
@@ -42,16 +42,14 @@ int			ft_printf(const char *format, ...)
 	va_start(s.ap, format);
 	while (*s.format)
 	{
-		if (*s.format == '%' && (s.format += 1) && init_tprint(&s))
+		if (*s.format == '%' && init_tprint(&s) && !(*(s.format + 1)))
+			s.format++;
+		else if (*s.format == '%' && (s.format += 1) && init_tprint(&s))
 			process_flag(&s);
 		else if ((s.cnt += 1))
 			ft_putchar(*s.format++);
 	}
 	va_end(s.ap);
-	if (s.hash && ft_strlen(s.hash))
-		free (s.hash);
 	free(f_start);
-	if (s.hash && ft_strlen(s.hash))
-		free(s.hash);
 	return (s.cnt);
 }

@@ -13,8 +13,7 @@
 #include "../includes/ft_printf.h"
 #include <inttypes.h>
 
-
-void handle_pre(t_print *s, int len)
+static void	handle_pre(t_print *s, int len)
 {
 	s->mfw = (s->mfw > len) ? (s->mfw - len) : 0;
 	if (s->pad_is == BEFORE)
@@ -22,7 +21,7 @@ void handle_pre(t_print *s, int len)
 			ft_putchar(' ');
 }
 
-void	handle_char(t_print *s)
+static void	handle_char(t_print *s)
 {
 	handle_pre(s, 1);
 	if (s->flag == 'c' && (s->cnt += 1))
@@ -31,10 +30,26 @@ void	handle_char(t_print *s)
 		ft_putwchar((va_arg(s->ap, wchar_t)));
 	else if (s->flag == '%' && (s->cnt += 1))
 		ft_putchar('%');
-	handle_post(s, 0);
+	handle_post_digit(s, POST, 0);
 }
 
-void	handle_str(t_print *s)
+static void	handle_wstr(t_print *s)
+{
+	char *arg;
+
+	arg = NULL;
+	if (!(arg = (char*)(va_arg(s->ap, wchar_t*))))
+		arg = "(null)";
+	if (s->is_prec)
+		arg = ((int)ft_wstrlen((wchar_t*)arg) > s->prec) ?
+		(char*)ft_wstrnsub((wchar_t*)arg, s->prec) : arg;
+	handle_pre(s, ft_wstrlen((wchar_t*)arg));
+	s->cnt += ft_wstrlen((wchar_t*)arg);
+	ft_putwstr((wchar_t*)arg);
+	handle_post_digit(s, POST, 0);
+}
+
+void		handle_str(t_print *s)
 {
 	char *arg;
 
@@ -49,20 +64,10 @@ void	handle_str(t_print *s)
 		handle_pre(s, ft_strlen(arg));
 		s->cnt += ft_strlen(arg);
 		ft_putstr(arg);
-		handle_post(s, 0);
+		handle_post_digit(s, POST, 0);
 	}
 	else if (s->flag == 'S')
-	{
-		if (!(arg = (char*)(va_arg(s->ap, wchar_t*))))
-			arg = "(null)";
-		if (s->is_prec)
-			arg = ((int)ft_wstrlen((wchar_t*)arg) > s->prec) ?
-			(char*)ft_wstrnsub((wchar_t*)arg, s->prec) : arg;
-		handle_pre(s, ft_wstrlen((wchar_t*)arg));
-		s->cnt += ft_wstrlen((wchar_t*)arg);
-		ft_putwstr((wchar_t*)arg);
-		handle_post(s, 0);
-	}
+		handle_wstr(s);
 	else
 		handle_char(s);
 }

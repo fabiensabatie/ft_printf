@@ -133,5 +133,11 @@ fclean: clean
 
 re: fclean all
 
+test: re
+	@echo "${GREEN}Compiling binary." | tr -d '\n'
+	@gcc $(CPPFLAGS) -o printf main.c libftprintf.a
+	@echo " ${GREEN}[OK]"
+	@make fclean
+
 tclean : fclean
 	@rm -rf printf

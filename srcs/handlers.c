@@ -12,34 +12,59 @@
 
 #include "../includes/ft_printf.h"
 
-void		handle_post(t_print *s, int i)
+void		handle_post_digit(t_print *s, int mode, int i)
 {
-	if (s->pad_is == AFTER && s->pad_char == ' ')
-		while (s->mfw-- > i + (int)ft_strlen(s->hash) && (s->cnt += 1))
-			ft_putchar(s->pad_char);
-}
-
-static void handle_digits(t_print *s)
-{
-	if (s->is_prec && (s->pad_char = ' '))
-		s->prec = ft_atoi(s->format);
+	if (mode == DIGITS)
+	{
+		if (s->is_prec && (s->pad_char = ' '))
+			s->prec = ft_atoi(s->format);
+		else
+			s->mfw = ft_atoi(s->format);
+		while (ft_isdigit(*s->format))
+			s->format++;
+	}
 	else
-		s->mfw = ft_atoi(s->format);
-	while (ft_isdigit(*s->format))
-		s->format++;
+	{
+		if (s->pad_is == AFTER && s->pad_char == ' ')
+			while (s->mfw-- > i + (int)ft_strlen(s->hash) && (s->cnt += 1))
+				ft_putchar(s->pad_char);
+	}
 }
 
-static void handle_opflag(t_print *s)
+void		handle_signs(t_print *s)
+{
+	if (s->pad_is == BEFORE && s->pad_char == ' ')
+		pad(s);
+	else if (s->pad_is == AFTER && s->is_prec)
+	{
+		if (s->sign == '+' && ft_strchr("dDioO", s->flag) && (s->cnt += 1))
+			(s->nb_ispos) ? ft_putchar('+') : ft_putchar('-');
+		s->prec = (s->prec > s->nb_digits) ? (s->prec - s->nb_digits) : 0;
+		while (s->prec-- > (int)ft_strlen(s->hash) && (s->cnt += 1)
+		&& (s->nb_digits += 1))
+			ft_putchar('0');
+		if (s->sign == '+' && ft_strchr("dDioO", s->flag))
+			s->nb_digits++;
+	}
+	else if (s->pad_is == AFTER && !s->nb_ispos && (s->nb_digits += 1)
+	&& (s->cnt += 1))
+		ft_putchar('-');
+	else if (s->pad_is == AFTER && s->sign == ' ' && (s->nb_digits += 1)
+	&& (s->cnt += 1))
+		ft_putchar(' ');
+}
+
+static void	handle_opflag(t_print *s)
 {
 	if (*s->format == '#' && (s->format += 1))
 	{
 		if (s->flag == 'o')
 			s->hash = ft_strdup("0");
 		else if (ft_strchr("xX", s->flag))
-			s->hash = (s->flag == 'x') ? ft_strdup("0x") : ft_strdup("0X");
+			s->hash = (s->flag == 'x') ? "0x" : "0X";
 	}
 	else if (ft_isdigit(*s->format) && *s->format != '0')
-		handle_digits(s);
+		handle_post_digit(s, DIGITS, 0);
 	else if (*s->format == '-' && (s->format += 1))
 		s->pad_is = AFTER;
 	else if ((s->pad_is != AFTER) && *s->format == '0' && (s->format += 1)
@@ -52,20 +77,20 @@ static void handle_opflag(t_print *s)
 	&& (s->format += 1))
 		s->sign = '+';
 	else if (*s->format == '.' && (s->format += 1) && (s->is_prec += 1))
-		handle_digits(s);
+		handle_post_digit(s, DIGITS, 0);
 	else
 		s->format++;
 }
 
 static void	get_modifiers(t_print *s)
 {
+	s->digits = (s->flag == 'x') ?
+	"0123456789abcdef" : "0123456789ABCDEF";
 	s->mod = X;
 	if (*s->format == 'h' && (s->format += 1))
-		(*s->format == 'h' && (s->format += 1)) ?
-		(s->mod = HH) : (s->mod = H);
+		s->mod = (*s->format == 'h' && (s->format += 1)) ? HH : H;
 	else if (*s->format == 'l' && (s->format += 1))
-		(*s->format == 'l' && (s->format += 1)) ?
-		(s->mod = LL) : (s->mod = L);
+		s->mod = (*s->format == 'l' && (s->format += 1)) ? LL : L;
 	else if (*s->format == 'j' && (s->format += 1))
 		s->mod = J;
 	else if (*s->format == 'z' && (s->format += 1))
@@ -74,7 +99,8 @@ static void	get_modifiers(t_print *s)
 
 void		process_flag(t_print *s)
 {
-	s->flag = ft_chrstr("sSpPdDioOuUxXcCb%", s->format);
+	if (!(s->flag = ft_chrstr("sSpPdDioOuUxXcCb%", s->format)))
+		return ;
 	while (*s->format != s->flag && !(ft_strchr("hljz", *s->format)))
 		handle_opflag(s);
 	get_modifiers(s);
