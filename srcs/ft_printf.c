@@ -48,6 +48,8 @@ int			ft_printf(const char *format, ...)
 			ft_putchar(*s.format++);
 	}
 	va_end(s.ap);
+	if (s.hash && ft_strlen(s.hash))
+		free (s.hash);
 	free(f_start);
 	return (s.cnt);
 }

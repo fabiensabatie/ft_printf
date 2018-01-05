@@ -53,9 +53,15 @@ void	handle_str(t_print *s)
 	}
 	else if (s->flag == 'S')
 	{
-		arg = (char*)(va_arg(s->ap, wchar_t*));
+		if (!(arg = (char*)(va_arg(s->ap, wchar_t*))))
+			arg = "(null)";
+		if (s->is_prec)
+			arg = ((int)ft_wstrlen((wchar_t*)arg) > s->prec) ?
+			(char*)ft_wstrnsub((wchar_t*)arg, s->prec) : arg;
+		handle_pre(s, ft_wstrlen((wchar_t*)arg));
 		s->cnt += ft_wstrlen((wchar_t*)arg);
 		ft_putwstr((wchar_t*)arg);
+		handle_post(s, 0);
 	}
 	else
 		handle_char(s);

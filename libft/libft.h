@@ -92,5 +92,6 @@ char				*ft_strnstr(char *haystack, char *needle, size_t len);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstnew(void const *content, size_t content_size);
+wchar_t				*ft_wstrnsub(wchar_t *s, int n);
 
 #endif

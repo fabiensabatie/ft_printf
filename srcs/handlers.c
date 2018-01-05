@@ -45,7 +45,8 @@ static void handle_opflag(t_print *s)
 	else if ((s->pad_is != AFTER) && *s->format == '0' && (s->format += 1)
 	&& (ft_strchr("dDioOuUxX", s->flag) && s->prec == 0))
 		s->pad_char = '0';
-	else if (*s->format == ' ' && !(s->sign) && (s->format += 1))
+	else if (*s->format == ' ' && !(s->sign)
+	&& (ft_strchr("dDi", s->flag) && (s->format += 1)))
 		s->sign = ' ';
 	else if (*s->format == '+' && (ft_strchr("dDi", s->flag))
 	&& (s->format += 1))
@@ -73,12 +74,25 @@ static void	get_modifiers(t_print *s)
 
 void		process_flag(t_print *s)
 {
-	s->flag = ft_chrstr("sSpdDioOuUxXcC%", s->format);
-	get_modifiers(s);
-	while (*s->format != s->flag)
+	s->flag = ft_chrstr("sSpPdDioOuUxXcCb%", s->format);
+	while (*s->format != s->flag && !(ft_strchr("hljz", *s->format)))
 		handle_opflag(s);
-	if (ft_strchr("dDioOuUxXp", s->flag))
+	get_modifiers(s);
+	if (ft_strchr("diouxXb", s->flag))
 		handle_nb(s);
+	else if (ft_strchr("DOUpP", s->flag))
+	{
+		if (s->flag == 'D')
+			s->cnt += ft_printf("%ld", va_arg(s->ap, long));
+		else if (s->flag == 'O')
+			s->cnt += ft_printf("%lo", va_arg(s->ap, unsigned long));
+		else if (s->flag == 'U')
+			s->cnt += ft_printf("%lu", va_arg(s->ap, unsigned long));
+		else if (s->flag == 'p')
+			s->cnt += ft_printf("%#lx", va_arg(s->ap, unsigned long));
+		else if (s->flag == 'P')
+			s->cnt += ft_printf("%#lX", va_arg(s->ap, unsigned long));
+	}
 	else if (ft_strchr("sScC%", s->flag))
 		handle_str(s);
 	s->format++;
