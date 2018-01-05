@@ -6,7 +6,7 @@
 #    By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 17:18:12 by fsabatie          #+#    #+#              #
-#    Updated: 2018/01/03 20:30:35 by fsabatie         ###   ########.fr        #
+#    Updated: 2018/01/04 23:50:03 by fsabatie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,7 +135,7 @@ re: fclean all
 
 test: fclean all clean
 	@echo "${GREEN}Compiling binary." | tr -d '\n'
-	@gcc $(CPPFLAGS) -o printf libftprintf.a main.c
+	@gcc $(CPPFLAGS) -g -o printf libftprintf.a main.c
 	@make fclean
 	@echo " ${GREEN}[OK]"
 
