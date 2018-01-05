@@ -114,13 +114,13 @@ _SRC = $(addprefix ../,$(SRC))
 PRSRC = $(addprefix srcs/,$(PRINTF_SRC))
 _PRSRC = $(addprefix ../,$(PRSRC))
 
-CPPFLAGS = -Wall -Wextra 
+CPPFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME):
 	@echo "${GREEN}Compiling libftprintf." | tr -d '\n'
-	@mkdir obj && cd obj && gcc $(CPPFLAGS) -I$(INC_PATH) -g -c $(_SRC) $(_PRSRC)
+	@mkdir obj && cd obj && gcc $(CPPFLAGS) -I$(INC_PATH) -c $(_SRC) $(_PRSRC)
 	@ar rc $(NAME) $(OBJ) $(PRINTF_OBJ)
 	@ranlib $(NAME)
 	@echo " ${GREEN}[OK]"
@@ -135,7 +135,7 @@ re: fclean all
 
 test: fclean all clean
 	@echo "${GREEN}Compiling binary." | tr -d '\n'
-	@gcc $(CPPFLAGS) -g -o printf libftprintf.a main.c
+	@gcc $(CPPFLAGS) -o printf libftprintf.a main.c
 	@make fclean
 	@echo " ${GREEN}[OK]"
 
