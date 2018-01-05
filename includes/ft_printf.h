@@ -13,9 +13,8 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "../libft/libft.h"
+# include <stdarg.h>
 # include <inttypes.h>
-# define UINT (0)
-# define INT (1)
 # define BEFORE 0
 # define AFTER 1
 

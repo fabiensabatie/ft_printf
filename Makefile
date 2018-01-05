@@ -120,7 +120,7 @@ all: $(NAME)
 
 $(NAME):
 	@echo "${GREEN}Compiling libftprintf." | tr -d '\n'
-	@mkdir obj && cd obj && gcc $(CPPFLAGS) -I$(INC_PATH) -c $(_SRC) $(_PRSRC)
+	@mkdir obj && cd obj && gcc $(CPPFLAGS) -c $(_SRC) $(_PRSRC)
 	@ar rc $(NAME) $(OBJ) $(PRINTF_OBJ)
 	@ranlib $(NAME)
 	@echo " ${GREEN}[OK]"
