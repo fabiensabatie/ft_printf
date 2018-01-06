@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:17 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 21:22:34 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/06 14:51:12 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ static int	get_base(t_print *s)
 static void	handle_pre(t_print *s)
 {
 	handle_signs(s);
+	if (s->blink)
+		ft_putstr(BLINK);
+	if (s->color)
+		ft_putstr(s->color);
 	if (s->arg == 0 && ft_strchr("iuU", s->flag) && (s->cnt += 1))
 		return (ft_putchar('0'));
 	else if (s->arg == 0 && ft_strchr("dDxXoO", s->flag) && !s->is_prec

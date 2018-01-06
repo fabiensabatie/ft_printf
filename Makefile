@@ -6,7 +6,7 @@
 #    By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 17:18:12 by fsabatie          #+#    #+#              #
-#    Updated: 2018/01/05 22:19:56 by fsabatie         ###   ########.fr        #
+#    Updated: 2018/01/06 14:43:22 by fsabatie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ INC_PATH = imcludes
 
 PRINTF_SRC =	ft_printf.c \
 				handlers.c \
-				nb_printers.c
+				nb_printers.c \
+				bonus.c
 
 SRC_NAME =	ft_strjoin_char.c \
 			ft_strjoinfree.c \

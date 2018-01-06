@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:59 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/03 20:46:10 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/06 14:51:41 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void		handle_post_digit(t_print *s, int mode, int i)
 		if (s->pad_is == AFTER && s->pad_char == ' ')
 			while (s->mfw-- > i + (int)ft_strlen(s->hash) && (s->cnt += 1))
 				ft_putchar(s->pad_char);
+		if (s->color)
+			ft_putstr(CR);
 	}
 }
 
@@ -87,6 +89,7 @@ static void	get_modifiers(t_print *s)
 	s->digits = (s->flag == 'x') ?
 	"0123456789abcdef" : "0123456789ABCDEF";
 	s->mod = X;
+	handle_bonus(s);
 	if (*s->format == 'h' && (s->format += 1))
 		s->mod = (*s->format == 'h' && (s->format += 1)) ? HH : H;
 	else if (*s->format == 'l' && (s->format += 1))
@@ -101,7 +104,7 @@ void		process_flag(t_print *s)
 {
 	if (!(s->flag = ft_chrstr("sSpPdDioOuUxXcCb%", s->format)))
 		return ;
-	while (*s->format != s->flag && !(ft_strchr("hljz", *s->format)))
+	while (*s->format != s->flag && !(ft_strchr("hljz|=", *s->format)))
 		handle_opflag(s);
 	get_modifiers(s);
 	if (ft_strchr("diouxXb", s->flag))

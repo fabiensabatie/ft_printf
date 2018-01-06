@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_printers.c                                     :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:25 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/05 22:19:12 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/06 15:05:37 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			ft_printf(const char *format, ...)
 			s.format++;
 		else if (*s.format == '%' && (s.format += 1))
 			process_flag(&s);
-		else if ((s.cnt += 1))
+		else if (*s.format && (s.cnt += 1))
 			ft_putchar(*s.format++);
 	}
 	va_end(s.ap);
@@ -48,6 +48,10 @@ int			ft_printf(const char *format, ...)
 
 static void	handle_pre(t_print *s, int len)
 {
+	if (s->blink)
+		ft_putstr(BLINK);
+	if (s->color)
+		ft_putstr(s->color);
 	s->mfw = (s->mfw > len) ? (s->mfw - len) : 0;
 	if (s->pad_is == BEFORE)
 		while (s->mfw-- > 0 && (s->cnt += 1))
