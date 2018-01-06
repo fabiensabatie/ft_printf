@@ -15,7 +15,7 @@
 ## How to use :
 
 ```
-Simply use "make"
+Simply use make
 ```
 
 ## Functionalities :
