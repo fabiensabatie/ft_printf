@@ -12,7 +12,7 @@
 
 #include "../includes/ft_printf.h"
 
-static void set_color(t_print *s)
+static void	set_color(t_print *s)
 {
 	if (*s->format == 'R' && (s->format += 1))
 		s->color = RED;
@@ -30,7 +30,7 @@ static void set_color(t_print *s)
 		s->color = CR;
 }
 
-void	handle_bonus(t_print *s)
+void		handle_bonus(t_print *s)
 {
 	s->color = 0;
 	s->blink = 0;

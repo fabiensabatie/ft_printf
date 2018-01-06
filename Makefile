@@ -114,8 +114,7 @@ _SRC = $(addprefix ../,$(SRC))
 PRSRC = $(addprefix srcs/,$(PRINTF_SRC))
 _PRSRC = $(addprefix ../,$(PRSRC))
 
-CPPFLAGS = -Wall -Wextra -Werror
-
+CPPFLAGS = -Wall -Wextra 
 all: $(NAME)
 
 $(NAME):

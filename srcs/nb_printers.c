@@ -50,13 +50,9 @@ static int	get_base(t_print *s)
 static void	handle_pre(t_print *s)
 {
 	handle_signs(s);
-	if (s->blink)
-		ft_putstr(BLINK);
-	if (s->color)
-		ft_putstr(s->color);
-	if (s->arg == 0 && ft_strchr("iuU", s->flag) && (s->cnt += 1))
-		return (ft_putchar('0'));
-	else if (s->arg == 0 && ft_strchr("dDxXoO", s->flag) && !s->is_prec
+	(s->blink) ? ft_putstr(BLINKON) : 0;
+	(s->color) ? ft_putstr(s->color) : 0;
+	if (s->arg == 0 && ft_strchr("uUidDxXoO", s->flag) && !s->is_prec
 	&& (s->cnt += 1))
 		return (ft_putchar('0'));
 	else if (s->arg == 0 && ft_strchr("oO", s->flag) && s->is_prec

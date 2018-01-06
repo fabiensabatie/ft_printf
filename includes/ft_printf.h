@@ -26,7 +26,8 @@
 # define MAGENTA	"\x1b[35m"
 # define PURPLE		"\x1b[36m"
 # define CR			"\x1b[39m"
-# define BLINK		"\x1b[5m"
+# define BLINKON	"\x1b[5m"
+# define BLINKOFF	"\x1b[25m"
 
 typedef enum	e_mod
 {

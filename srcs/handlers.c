@@ -17,9 +17,11 @@ void		handle_post_digit(t_print *s, int mode, int i)
 	if (mode == DIGITS)
 	{
 		if (s->is_prec && (s->pad_char = ' '))
-			s->prec = ft_atoi(s->format);
+			s->prec = ((*s->format == '*' && (s->format += 1))) ?
+			va_arg(s->ap, int) : ft_atoi(s->format);
 		else
-			s->mfw = ft_atoi(s->format);
+			s->mfw = ((*s->format == '*' && (s->format += 1))) ?
+			va_arg(s->ap, int) : ft_atoi(s->format);
 		while (ft_isdigit(*s->format))
 			s->format++;
 	}
@@ -28,8 +30,8 @@ void		handle_post_digit(t_print *s, int mode, int i)
 		if (s->pad_is == AFTER && s->pad_char == ' ')
 			while (s->mfw-- > i + (int)ft_strlen(s->hash) && (s->cnt += 1))
 				ft_putchar(s->pad_char);
-		if (s->color)
-			ft_putstr(CR);
+		(s->blink) ? ft_putstr(BLINKOFF) : 0;
+		(s->color) ? ft_putstr(CR) : 0;
 	}
 }
 
@@ -65,7 +67,7 @@ static void	handle_opflag(t_print *s)
 		else if (ft_strchr("xX", s->flag))
 			s->hash = (s->flag == 'x') ? "0x" : "0X";
 	}
-	else if (ft_isdigit(*s->format) && *s->format != '0')
+	else if (*s->format == '*' || (ft_isdigit(*s->format) && *s->format != '0'))
 		handle_post_digit(s, DIGITS, 0);
 	else if (*s->format == '-' && (s->format += 1))
 		s->pad_is = AFTER;
@@ -75,8 +77,8 @@ static void	handle_opflag(t_print *s)
 	else if (*s->format == ' ' && !(s->sign)
 	&& (ft_strchr("dDi", s->flag) && (s->format += 1)))
 		s->sign = ' ';
-	else if (*s->format == '+' && (ft_strchr("dDi", s->flag))
-	&& (s->format += 1))
+	else if (*s->format == '+' && (ft_strchr("dDi", s->flag)
+	&& (s->format += 1)))
 		s->sign = '+';
 	else if (*s->format == '.' && (s->format += 1) && (s->is_prec += 1))
 		handle_post_digit(s, DIGITS, 0);
@@ -102,6 +104,8 @@ static void	get_modifiers(t_print *s)
 
 void		process_flag(t_print *s)
 {
+	s->is_prec = 0;
+	s->prec = 0;
 	if (!(s->flag = ft_chrstr("sSpPdDioOuUxXcCb%", s->format)))
 		return ;
 	while (*s->format != s->flag && !(ft_strchr("hljz|=", *s->format)))

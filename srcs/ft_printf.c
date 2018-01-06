@@ -27,8 +27,6 @@ int			ft_printf(const char *format, ...)
 	while (*s.format)
 	{
 		s.mfw = 0;
-		s.is_prec = 0;
-		s.prec = 0;
 		s.sign = 0;
 		s.nb_ispos = 0;
 		s.hash = "";
@@ -49,7 +47,7 @@ int			ft_printf(const char *format, ...)
 static void	handle_pre(t_print *s, int len)
 {
 	if (s->blink)
-		ft_putstr(BLINK);
+		ft_putstr(BLINKON);
 	if (s->color)
 		ft_putstr(s->color);
 	s->mfw = (s->mfw > len) ? (s->mfw - len) : 0;
