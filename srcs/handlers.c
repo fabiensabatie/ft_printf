@@ -16,11 +16,11 @@ void		handle_post_digit(t_print *s, int mode, int i)
 {
 	if (mode == DIGITS)
 	{
-		if (s->is_prec && (s->pad_char = ' '))
-			s->prec = ((*s->format == '*' && (s->format += 1))) ?
+		if (s->ip && (s->pad_char = ' '))
+			s->prec = ((*s->format == '*' && (*s->format += 1))) ?
 			va_arg(s->ap, int) : ft_atoi(s->format);
 		else
-			s->mfw = ((*s->format == '*' && (s->format += 1))) ?
+			s->mfw = ((*s->format == '*' && (*s->format += 1))) ?
 			va_arg(s->ap, int) : ft_atoi(s->format);
 		while (ft_isdigit(*s->format))
 			s->format++;
@@ -39,7 +39,7 @@ void		handle_signs(t_print *s)
 {
 	if (s->pad_is == BEFORE && s->pad_char == ' ')
 		pad(s);
-	else if (s->pad_is == AFTER && s->is_prec)
+	else if (s->pad_is == AFTER && s->ip)
 	{
 		if (s->sign == '+' && ft_strchr("dDioO", s->flag) && (s->cnt += 1))
 			(s->nb_ispos) ? ft_putchar('+') : ft_putchar('-');
@@ -63,7 +63,7 @@ static void	handle_opflag(t_print *s)
 	if (*s->format == '#' && (s->format += 1))
 	{
 		if (s->flag == 'o')
-			s->hash = ft_strdup("0");
+			s->hash = "0";
 		else if (ft_strchr("xX", s->flag))
 			s->hash = (s->flag == 'x') ? "0x" : "0X";
 	}
@@ -77,10 +77,10 @@ static void	handle_opflag(t_print *s)
 	else if (*s->format == ' ' && !(s->sign)
 	&& (ft_strchr("dDi", s->flag) && (s->format += 1)))
 		s->sign = ' ';
-	else if (*s->format == '+' && (ft_strchr("dDi", s->flag)
-	&& (s->format += 1)))
+	else if (*s->format == '+' && (ft_strchr("dDi", s->flag))
+	&& (s->format += 1))
 		s->sign = '+';
-	else if (*s->format == '.' && (s->format += 1) && (s->is_prec += 1))
+	else if (*s->format == '.' && (s->format += 1) && (s->ip += 1))
 		handle_post_digit(s, DIGITS, 0);
 	else
 		s->format++;
@@ -88,9 +88,8 @@ static void	handle_opflag(t_print *s)
 
 static void	get_modifiers(t_print *s)
 {
-	s->digits = (s->flag == 'x') ?
-	"0123456789abcdef" : "0123456789ABCDEF";
 	s->mod = X;
+	s->oprec = s->prec;
 	handle_bonus(s);
 	if (*s->format == 'h' && (s->format += 1))
 		s->mod = (*s->format == 'h' && (s->format += 1)) ? HH : H;
@@ -104,29 +103,27 @@ static void	get_modifiers(t_print *s)
 
 void		process_flag(t_print *s)
 {
-	s->is_prec = 0;
+	s->ip = 0;
 	s->prec = 0;
+	s->pad_is = BEFORE;
 	if (!(s->flag = ft_chrstr("sSpPdDioOuUxXcCb%", s->format)))
 		return ;
 	while (*s->format != s->flag && !(ft_strchr("hljz|=", *s->format)))
 		handle_opflag(s);
 	get_modifiers(s);
-	if (ft_strchr("diouxXb", s->flag))
-		handle_nb(s);
-	else if (ft_strchr("DOUpP", s->flag))
+	if (ft_strchr("pP", s->flag))
 	{
-		if (s->flag == 'D')
-			s->cnt += ft_printf("%ld", va_arg(s->ap, long));
-		else if (s->flag == 'O')
-			s->cnt += ft_printf("%lo", va_arg(s->ap, unsigned long));
-		else if (s->flag == 'U')
-			s->cnt += ft_printf("%lu", va_arg(s->ap, unsigned long));
-		else if (s->flag == 'p')
-			s->cnt += ft_printf("%#lx", va_arg(s->ap, unsigned long));
-		else if (s->flag == 'P')
-			s->cnt += ft_printf("%#lX", va_arg(s->ap, unsigned long));
+		s->hash = (s->flag == 'p') ? "0x" : "0X";
+		s->flag = (s->flag == 'p') ? 'x' : 'x';
+		s->mod = LL;
 	}
-	else if (ft_strchr("sScC%", s->flag))
+	s->digits = (s->flag == 'x') ?
+	"0123456789abcdef" : "0123456789ABCDEF";
+	if (ft_strchr("DOU", s->flag))
+		s->mod = L;
+	if (ft_strchr("dDiouUxXb", s->flag))
+		handle_nb(s);
+	if (ft_strchr("sScC%", s->flag))
 		handle_str(s);
 	s->format++;
 }

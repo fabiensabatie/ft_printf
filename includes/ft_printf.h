@@ -48,11 +48,13 @@ typedef struct		s_print
 	char			flag;
 	t_mod			mod;
 	char			*hash;
+	int				h;
 	char			*color;
 	int				blink;
 	int				mfw;
-	int				is_prec;
+	int				ip;
 	int				prec;
+	int				oprec;
 	int				pad_is;
 	char			pad_char;
 	char			sign;

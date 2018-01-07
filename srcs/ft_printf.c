@@ -75,7 +75,7 @@ static void	handle_wstr(t_print *s)
 	arg = NULL;
 	if (!(arg = (char*)(va_arg(s->ap, wchar_t*))))
 		arg = "(null)";
-	if (s->is_prec)
+	if (s->ip)
 		arg = ((int)ft_wstrlen((wchar_t*)arg) > s->prec) ?
 		(char*)ft_wstrnsub((wchar_t*)arg, s->prec) : arg;
 	handle_pre(s, ft_wstrlen((wchar_t*)arg));
@@ -93,7 +93,7 @@ void		handle_str(t_print *s)
 	{
 		if (!(arg = (char*)(va_arg(s->ap, char*))))
 			arg = "(null)";
-		if (s->is_prec)
+		if (s->ip)
 			arg = ((int)ft_strlen(arg) > s->prec) ?
 			ft_strnsub(arg, s->prec) : arg;
 		handle_pre(s, ft_strlen(arg));

@@ -24,6 +24,12 @@ void		pad(t_print *s)
 	if (s->pad_char == ' ')
 		while (s->mfw-- > (int)ft_strlen(s->hash) && (s->cnt += 1))
 			ft_putchar(s->pad_char);
+	if (s->arg != 0 && ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash))
+	&& (s->nb_digits += ft_strlen(s->hash)) && (s->h += 1))
+	{
+		ft_putstr(s->hash);
+		s->hash = "";
+	}
 	if (s->sign == ' ' && s->nb_ispos && (s->cnt += 1))
 		ft_putchar(s->sign);
 	else if (s->sign == '+' && ft_strchr("dDioO", s->flag) && (s->cnt += 1))
@@ -52,18 +58,28 @@ static void	handle_pre(t_print *s)
 	handle_signs(s);
 	(s->blink) ? ft_putstr(BLINKON) : 0;
 	(s->color) ? ft_putstr(s->color) : 0;
-	if (s->arg == 0 && ft_strchr("uUidDxXoO", s->flag) && !s->is_prec
+	if (s->pad_is == BEFORE && s->pad_char == '0' &&
+	ft_strchr("idDxXoOuU", s->flag))
+	{
+		if (ft_strlen(s->hash) && s->arg != 0 && (s->cnt += ft_strlen(s->hash))
+		&& (s->nb_digits += ft_strlen(s->hash)))
+			ft_putstr(s->hash);
+		s->hash = "";
+		pad(s);
+	}
+	if (s->arg == 0 && ft_strchr("uUidDxXoO", s->flag) && !s->ip
 	&& (s->cnt += 1))
 		return (ft_putchar('0'));
-	else if (s->arg == 0 && ft_strchr("oO", s->flag) && s->is_prec
+	if (s->arg == 0 && ft_strchr("uU", s->flag) && s->ip && s->oprec >= 1
+	&& (s->cnt += 1))
+		ft_putchar('0');
+	else if (s->arg == 0 && ft_strchr("oO", s->flag) && s->ip
 	&& ft_strlen(s->hash) && (s->cnt += 1))
 		return (ft_putchar('0'));
-	else if (s->arg == 0 && ft_strchr("dDxXoO", s->flag) && s->is_prec)
+	else if (s->arg == 0 && ft_strchr("dDxXoO", s->flag) && s->ip)
 		return ;
-	if (ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash)))
+	if (!s->h && ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash)))
 		ft_putstr(s->hash);
-	if (s->pad_is == BEFORE && s->pad_char == '0')
-		pad(s);
 }
 
 static void	nb_print(t_print *s, intmax_t nbr)
@@ -74,7 +90,8 @@ static void	nb_print(t_print *s, intmax_t nbr)
 
 	i = 0;
 	s->arg = nbr;
-	s->nb_ispos = (nbr >= 0) ? 1 : 0;
+	s->nb_ispos = ((nbr >= 0)) ? 1 : 0;
+	s->nb_ispos = (ft_strchr("xXoOuU", s->flag)) ? 1 : s->nb_ispos;
 	n = nbr;
 	if ((!s->nb_ispos) && (s->sign = '+'))
 		n = -nbr;
@@ -86,7 +103,7 @@ static void	nb_print(t_print *s, intmax_t nbr)
 		n /= s->base;
 	}
 	s->nb_digits = i ? i : 1;
-	if (s->arg == 0 && ft_strchr("xXoOdD", s->flag) && s->is_prec)
+	if (s->arg == 0 && ft_strchr("xXoOdD", s->flag) && s->ip)
 		s->nb_digits = 0;
 	handle_pre(s);
 	while (i-- && (s->cnt += 1))
