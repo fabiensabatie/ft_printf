@@ -24,5 +24,9 @@ Simply use make
 • Regular flags : sSpdDioOuUxXcC
 • Modifier flags : .#0-+%, space, hh, h, l, ll, j, and z.
 • Minimum field-width and precision.
-• Bonus flag : b.
+• Bonus flags : *b.
+• Colors and blinking text : 
+  - '=' blinking
+  - '|RBGYVM' colors
+  - Example : ft_printf("%=|Gs\n", "Hello World!"); -> Prints a blinking green "Hello world".
 ```
