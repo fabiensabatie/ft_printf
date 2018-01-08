@@ -32,7 +32,7 @@ INC_PATH = imcludes
 PRINTF_SRC =	ft_printf.c \
 				handlers.c \
 				nb_printers.c \
-				bonus.c
+				spec_handlers.c
 
 SRC_NAME =	ft_strjoin_char.c \
 			ft_strjoinfree.c \
@@ -114,7 +114,7 @@ _SRC = $(addprefix ../,$(SRC))
 PRSRC = $(addprefix srcs/,$(PRINTF_SRC))
 _PRSRC = $(addprefix ../,$(PRSRC))
 
-CPPFLAGS = -Wall -Wextra 
+CPPFLAGS = -Wall -Wextra
 all: $(NAME)
 
 $(NAME):
@@ -132,7 +132,7 @@ fclean: clean
 
 re: fclean all
 
-test: re
+tester: re
 	@echo "${GREEN}Compiling binary." | tr -d '\n'
 	@gcc $(CPPFLAGS) -o printf main.c libftprintf.a
 	@echo " ${GREEN}[OK]"

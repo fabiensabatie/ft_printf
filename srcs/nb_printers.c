@@ -21,15 +21,14 @@ void		pad(t_print *s)
 		s->nb_digits++;
 	s->mfw = (s->mfw > (s->prec + s->nb_digits)) ?
 	(s->mfw - s->prec - s->nb_digits) : 0;
-	if (s->pad_char == ' ')
+	s->mfw -= (s->ptr && s->arg == 0) ? ft_strlen(s->hash) : 0;
+	if (s->pad_char == ' ' && ft_strchr("xXoO", s->flag) && s->arg == 0)
+		while (s->mfw-- > 0 && (s->cnt += 1))
+			ft_putchar(s->pad_char);
+	else if (s->pad_char == ' ')
 		while (s->mfw-- > (int)ft_strlen(s->hash) && (s->cnt += 1))
 			ft_putchar(s->pad_char);
-	if (s->arg != 0 && ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash))
-	&& (s->nb_digits += ft_strlen(s->hash)) && (s->h += 1))
-	{
-		ft_putstr(s->hash);
-		s->hash = "";
-	}
+	handle_special(s);
 	if (s->sign == ' ' && s->nb_ispos && (s->cnt += 1))
 		ft_putchar(s->sign);
 	else if (s->sign == '+' && ft_strchr("dDioO", s->flag) && (s->cnt += 1))
@@ -67,19 +66,7 @@ static void	handle_pre(t_print *s)
 		s->hash = "";
 		pad(s);
 	}
-	if (s->arg == 0 && ft_strchr("uUidDxXoO", s->flag) && !s->ip
-	&& (s->cnt += 1))
-		return (ft_putchar('0'));
-	if (s->arg == 0 && ft_strchr("uU", s->flag) && s->ip && s->oprec >= 1
-	&& (s->cnt += 1))
-		ft_putchar('0');
-	else if (s->arg == 0 && ft_strchr("oO", s->flag) && s->ip
-	&& ft_strlen(s->hash) && (s->cnt += 1))
-		return (ft_putchar('0'));
-	else if (s->arg == 0 && ft_strchr("dDxXoO", s->flag) && s->ip)
-		return ;
-	if (!s->h && ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash)))
-		ft_putstr(s->hash);
+	handle_zero(s);
 }
 
 static void	nb_print(t_print *s, intmax_t nbr)

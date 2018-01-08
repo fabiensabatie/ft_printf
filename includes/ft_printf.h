@@ -47,6 +47,7 @@ typedef struct		s_print
 	char			*digits;
 	char			flag;
 	t_mod			mod;
+	int				ptr;
 	char			*hash;
 	int				h;
 	char			*color;
@@ -72,6 +73,8 @@ void				pad(t_print *s);
 void				process_flag(t_print *s);
 void				handle_nb(t_print *s);
 void				handle_str(t_print *s);
+void				handle_zero(t_print *s);
+void				handle_special(t_print *s);
 void				handle_bonus(t_print *s);
 
 #endif

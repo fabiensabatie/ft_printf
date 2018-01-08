@@ -53,7 +53,7 @@ static void	handle_pre(t_print *s, int len)
 	s->mfw = (s->mfw > len) ? (s->mfw - len) : 0;
 	if (s->pad_is == BEFORE)
 		while (s->mfw-- > 0 && (s->cnt += 1))
-			ft_putchar(' ');
+			ft_putchar(s->pad_char);
 }
 
 static void	handle_char(t_print *s)

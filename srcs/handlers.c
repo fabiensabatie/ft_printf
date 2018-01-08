@@ -62,7 +62,7 @@ static void	handle_opflag(t_print *s)
 {
 	if (*s->format == '#' && (s->format += 1))
 	{
-		if (s->flag == 'o')
+		if (s->flag == 'o' || s->flag == 'O')
 			s->hash = "0";
 		else if (ft_strchr("xX", s->flag))
 			s->hash = (s->flag == 'x') ? "0x" : "0X";
@@ -72,7 +72,7 @@ static void	handle_opflag(t_print *s)
 	else if (*s->format == '-' && (s->format += 1))
 		s->pad_is = AFTER;
 	else if ((s->pad_is != AFTER) && *s->format == '0' && (s->format += 1)
-	&& (ft_strchr("dDioOuUxX", s->flag) && s->prec == 0))
+	&& (ft_strchr("dDioOuUxX%", s->flag) && s->prec == 0))
 		s->pad_char = '0';
 	else if (*s->format == ' ' && !(s->sign)
 	&& (ft_strchr("dDi", s->flag) && (s->format += 1)))
@@ -106,6 +106,7 @@ void		process_flag(t_print *s)
 	s->ip = 0;
 	s->prec = 0;
 	s->pad_is = BEFORE;
+	s->ptr = 0;
 	if (!(s->flag = ft_chrstr("sSpPdDioOuUxXcCb%", s->format)))
 		return ;
 	while (*s->format != s->flag && !(ft_strchr("hljz|=", *s->format)))
@@ -114,14 +115,15 @@ void		process_flag(t_print *s)
 	if (ft_strchr("pP", s->flag))
 	{
 		s->hash = (s->flag == 'p') ? "0x" : "0X";
-		s->flag = (s->flag == 'p') ? 'x' : 'x';
+		s->flag = (s->flag == 'p') ? 'x' : 'X';
+		s->ptr = 1;
 		s->mod = LL;
 	}
 	s->digits = (s->flag == 'x') ?
 	"0123456789abcdef" : "0123456789ABCDEF";
 	if (ft_strchr("DOU", s->flag))
 		s->mod = L;
-	if (ft_strchr("dDiouUxXb", s->flag))
+	if (ft_strchr("dDioOuUxXb", s->flag))
 		handle_nb(s);
 	if (ft_strchr("sScC%", s->flag))
 		handle_str(s);

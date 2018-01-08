@@ -12,6 +12,39 @@
 
 #include "../includes/ft_printf.h"
 
+void		handle_special(t_print *s)
+{
+	if (ft_strchr("oO", s->flag) && s->arg != 0 && ft_strlen(s->hash)
+	&& (s->cnt += ft_strlen(s->hash)) && (s->nb_digits += ft_strlen(s->hash))
+	&& (s->h += 1) && (s->prec -= ft_strlen(s->hash)))
+		ft_putstr(s->hash);
+	else if (ft_strchr("xX", s->flag) && (s->arg != 0 || s->ptr)
+	&& ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash))
+	&& (s->nb_digits += ft_strlen(s->hash)) && (s->h += 1))
+		ft_putstr(s->hash);
+	s->hash = (s->h) ? "" : s->hash;
+}
+
+void		handle_zero(t_print *s)
+{
+	if (s->arg == 0 && ft_strchr("xXuUidDoO", s->flag) && !s->ip
+	&& (s->cnt += 1))
+		return (ft_putchar('0'));
+	if (s->arg == 0 && ft_strchr("uU", s->flag) && s->ip && s->oprec >= 1
+	&& (s->cnt += 1))
+		ft_putchar('0');
+	else if (s->arg == 0 && ft_strchr("xX", s->flag) && s->ip && s->oprec >= 1
+	&& ft_strlen(s->hash) && (s->cnt += 1))
+		return (ft_putchar('0'));
+	else if (s->arg == 0 && ft_strchr("oO", s->flag) && s->ip
+	&& ft_strlen(s->hash) && (s->cnt += 1))
+		return (ft_putchar('0'));
+	else if (s->arg == 0 && ft_strchr("dDxXoO", s->flag) && s->ip)
+		return ;
+	if (!s->h && ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash)))
+		ft_putstr(s->hash);
+}
+
 static void	set_color(t_print *s)
 {
 	if (*s->format == 'R' && (s->format += 1))
