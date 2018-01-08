@@ -118,7 +118,7 @@ CPPFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	@echo "${GREEN}Compiling libftprintf." | tr -d '\n'
+	@echo "${GREEN}Compiling library." | tr -d '\n'
 	@mkdir obj && cd obj && gcc $(CPPFLAGS) -c $(_SRC) $(_PRSRC)
 	@ar rc $(NAME) $(OBJ) $(PRINTF_OBJ)
 	@ranlib $(NAME)
