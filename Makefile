@@ -114,7 +114,7 @@ _SRC = $(addprefix ../,$(SRC))
 PRSRC = $(addprefix srcs/,$(PRINTF_SRC))
 _PRSRC = $(addprefix ../,$(PRSRC))
 
-CPPFLAGS = -Wall -Wextra
+CPPFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
@@ -132,7 +132,7 @@ fclean: clean
 
 re: fclean all
 
-tester: re
+test: re
 	@echo "${GREEN}Compiling binary." | tr -d '\n'
 	@gcc $(CPPFLAGS) -o printf main.c libftprintf.a
 	@echo " ${GREEN}[OK]"
