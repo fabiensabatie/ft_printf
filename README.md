@@ -26,7 +26,7 @@ Simply use make
 • Minimum field-width and precision.
 • Bonus flags : *b.
 • Colors and blinking text : 
-  - '=' blinking (doe not work in iTerm, use in the regular Terminal)
+  - '=' blinking (doe not work in iTerm by defualt : Preferences > Check Profiles > Text > Blinking text allowed.)
   - '|RBGYVM' colors
   - Example : ft_printf("%=|Gs\n", "Hello World!"); -> Prints a blinking green "Hello world".
 ```
