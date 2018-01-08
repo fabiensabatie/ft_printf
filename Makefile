@@ -12,16 +12,6 @@
 
 .PHONY : all clean fclean re
 
-# Defining colors
-
-RED = \033[1;31m
-GREEN = \033[0;32m
-ORANGE = \033[0;33m
-BLUE = \033[1;36m
-YELLOW = \033[1;33m
-PURPLE = \033[1;35m
-WHITE = \033[0;97m
-
 # Defining variables
 
 NAME = libftprintf.a
@@ -118,11 +108,9 @@ CPPFLAGS = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME):
-	@echo "${GREEN}Compiling library." | tr -d '\n'
 	@mkdir obj && cd obj && gcc $(CPPFLAGS) -c $(_SRC) $(_PRSRC)
 	@ar rc $(NAME) $(OBJ) $(PRINTF_OBJ)
 	@ranlib $(NAME)
-	@echo " ${GREEN}[OK]"
 
 clean:
 	@rm -rf $(OBJ_PATH)
@@ -131,12 +119,3 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
-
-test: re
-	@echo "${GREEN}Compiling binary." | tr -d '\n'
-	@gcc $(CPPFLAGS) -o printf main.c libftprintf.a
-	@echo " ${GREEN}[OK]"
-	@make fclean
-
-tclean : fclean
-	@rm -rf printf
