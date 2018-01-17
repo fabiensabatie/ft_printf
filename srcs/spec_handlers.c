@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bonus.c                                            :+:      :+:    :+:   */
+/*   spec_handlers.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:59 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/06 15:08:26 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/15 23:48:45 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_printf.h"
+#include "../libft/libft.h"
 
 void		handle_special(t_print *s)
 {
 	if (ft_strchr("oO", s->flag) && s->arg != 0 && ft_strlen(s->hash)
-	&& (s->cnt += ft_strlen(s->hash)) && (s->nb_digits += ft_strlen(s->hash))
-	&& (s->h += 1) && (s->prec -= ft_strlen(s->hash)))
+	&& (s->cnt += ft_strlen(s->hash)))
+	{
+		s->nb_digits += ft_strlen(s->hash);
+		s->h += 1;
+		s->prec -= ft_strlen(s->hash);
 		ft_putstr(s->hash);
+	}
 	else if (ft_strchr("xX", s->flag) && (s->arg != 0 || s->ptr)
 	&& ft_strlen(s->hash) && (s->cnt += ft_strlen(s->hash))
 	&& (s->nb_digits += ft_strlen(s->hash)) && (s->h += 1))

@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:59 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/06 14:51:41 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/16 00:06:36 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void		handle_post_digit(t_print *s, int mode, int i)
 		else
 			s->mfw = ((*s->format == '*' && (*s->format += 1))) ?
 			va_arg(s->ap, int) : ft_atoi(s->format);
+		s->prec = (s->prec > 0) ? s->prec : 0;
+		s->mfw = (s->mfw > 0) ? s->mfw : 0;
 		while (ft_isdigit(*s->format))
 			s->format++;
 	}
@@ -121,6 +123,11 @@ void		process_flag(t_print *s)
 		s->flag = (s->flag == 'p') ? 'x' : 'X';
 		s->ptr = 1;
 		s->mod = LL;
+	}
+	if (s->mod == L || s->mod == LL)
+	{
+		s->cnt += (s->flag == 'c') ? ft_printf("%C", va_arg(s->ap, wchar_t)) : 0;
+		s->cnt += (s->flag == 's') ? ft_printf("%S", va_arg(s->ap, wchar_t*)) : 0;
 	}
 	s->digits = (s->flag == 'x') ?
 	"0123456789abcdef" : "0123456789ABCDEF";

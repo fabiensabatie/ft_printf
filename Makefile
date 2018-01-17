@@ -6,7 +6,7 @@
 #    By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/07 17:18:12 by fsabatie          #+#    #+#              #
-#    Updated: 2018/01/06 14:43:22 by fsabatie         ###   ########.fr        #
+#    Updated: 2018/01/15 13:19:45 by fsabatie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,3 +119,7 @@ fclean: clean
 	@rm -rf $(NAME)
 
 re: fclean all
+
+test: re
+	@gcc -o printf main.c libftprintf.a
+	@make fclean

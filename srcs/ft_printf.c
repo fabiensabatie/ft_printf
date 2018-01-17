@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/03 11:13:25 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/06 15:05:37 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/16 12:51:08 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <inttypes.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <unistd.h>
+
 
 int			ft_printf(const char *format, ...)
 {
@@ -58,11 +60,24 @@ static void	handle_pre(t_print *s, int len)
 
 static void	handle_char(t_print *s)
 {
+	wchar_t arg;
+
 	handle_pre(s, 1);
 	if (s->flag == 'c' && (s->cnt += 1))
 		ft_putchar((char)va_arg(s->ap, int));
-	else if (s->flag == 'C' && (s->cnt += 1))
-		ft_putwchar((va_arg(s->ap, wchar_t)));
+	else if (s->flag == 'C')
+	{
+		arg = va_arg(s->ap, wchar_t);
+		if (arg < 0x7F)
+			s->cnt += 1;
+		else if (arg <= 0x7FF)
+			s->cnt += 2;
+		else if (arg <= 0xFFFF)
+			s->cnt += 3;
+		else if (arg <= 0x1FFFFFF)
+			s->cnt += 4;
+		ft_putwchar(arg);
+	}
 	else if (s->flag == '%' && (s->cnt += 1))
 		ft_putchar('%');
 	handle_post_digit(s, POST, 0);
@@ -79,7 +94,7 @@ static void	handle_wstr(t_print *s)
 		arg = ((int)ft_wstrlen((wchar_t*)arg) > s->prec) ?
 		(char*)ft_wstrnsub((wchar_t*)arg, s->prec) : arg;
 	handle_pre(s, ft_wstrlen((wchar_t*)arg));
-	s->cnt += ft_wstrlen((wchar_t*)arg);
+	s->cnt += ft_wstrlen((wchar_t*)arg) * 2;
 	ft_putwstr((wchar_t*)arg);
 	handle_post_digit(s, POST, 0);
 }

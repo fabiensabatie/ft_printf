@@ -6,7 +6,7 @@
 /*   By: fsabatie <fsabatie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:29:41 by fsabatie          #+#    #+#             */
-/*   Updated: 2018/01/06 14:46:45 by fsabatie         ###   ########.fr       */
+/*   Updated: 2018/01/15 23:15:49 by fsabatie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void				handle_str(t_print *s);
 void				handle_zero(t_print *s);
 void				handle_special(t_print *s);
 void				handle_bonus(t_print *s);
+// void				write_wchar(t_print *s, wchar_t c);
 
 #endif
