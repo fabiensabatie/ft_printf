@@ -69,7 +69,7 @@ static void	handle_opflag(t_print *s)
 		else if (ft_strchr("xX", s->flag))
 			s->hash = (s->flag == 'x') ? "0x" : "0X";
 	}
-	else if (*s->format == '*' || (ft_isdigit(*s->format) && *s->format != '0'))
+	else if ((ft_isdigit(*s->format) && *s->format != '0'))
 		handle_post_digit(s, DIGITS, 0);
 	else if (*s->format == '-' && (s->format += 1))
 		s->pad_is = AFTER;

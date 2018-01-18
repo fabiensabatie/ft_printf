@@ -59,12 +59,11 @@ static void	add_zero(t_print *s)
 }
 
 void		wchar_tobuffer(t_print *s, wchar_t c)
-{
-	if (c < 0)
-	{
-		s->cnt = -1;
+{\
+	if ((((c < 0 || c > 0x10ffff)
+	|| (MB_CUR_MAX == 1 && c > 0xff && c <= 0x10ffff)
+	|| (c >= 0xd800 && c <= 0xdfff))) && (s->cnt = -1))
 		return ;
-	}
 	else if (c < 0x7F)
 		fill_buffer(s, CHAR, 0, (char)c);
 	else if (c <= 0x7FF && (s->wchar = 1))
@@ -89,8 +88,14 @@ void		wchar_tobuffer(t_print *s, wchar_t c)
 
 void		fill_buffer(t_print *s, int mode, char *str, char c)
 {
+	char	*n_str;
+
 	if (mode == CHAR && c)
-		cat_buffer(s, ft_chartostr(c));
+	{
+		n_str = ft_chartostr(c);
+		cat_buffer(s, n_str);
+		free(n_str);
+	}
 	else if (mode == CHAR && !c)
 		add_zero(s);
 	else if (mode == STR)

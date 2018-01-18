@@ -123,6 +123,6 @@ fclean: clean
 
 re: fclean all
 
-test: re
+lik: re
 	@gcc -Wall -Wextra -Werror ormain.c libftprintf.a -o printf
 	@make fclean

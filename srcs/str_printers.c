@@ -30,10 +30,7 @@ static void	handle_char(t_print *s)
 	if (s->flag == 'c' && s->mod != L)
 		fill_buffer(s, CHAR, 0, (char)va_arg(s->ap, int));
 	else if (s->flag == 'c' && s->mod == L)
-	{
-		ft_putendl("IN here");
-			wchar_tobuffer(s, va_arg(s->ap, wchar_t));
-	}
+		wchar_tobuffer(s, va_arg(s->ap, wchar_t));
 	else if (s->flag == 'C')
 		wchar_tobuffer(s, va_arg(s->ap, wchar_t));
 	else if (s->flag == '%')
@@ -52,8 +49,12 @@ static void	handle_wstr(t_print *s)
 		arg = ((int)ft_wstrlen((wchar_t*)arg) > s->prec) ?
 		(wchar_t*)ft_wstrnsub((wchar_t*)arg, s->prec) : arg;
 	handle_pre(s, ft_wstrlen((wchar_t*)arg));
-	while ((wchar_t)*arg)
+	while ((wchar_t)*arg != '\0')
+	{
 		wchar_tobuffer(s, *arg++);
+		if ((int)s->cnt == -1)
+			return ;
+	}
 	handle_post_digit(s, POST, 0);
 }
 
